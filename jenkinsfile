@@ -26,9 +26,10 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('install') {
+        stage('build') {
             steps {
-                sh 'mvn install'
+                sh 'docker build -t img1 .'
+                sh 'docker run -itd --name container1 -p 8080:8080 img1'
              }
          }
         stage('deploy') {

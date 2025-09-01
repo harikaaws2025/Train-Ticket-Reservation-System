@@ -31,5 +31,22 @@ pipeline{
                 sh 'mvn install'
              }
          }
+     stage('Build Docker Image') {
+            steps {
+                sh '''
+                    docker rmi -f img:v1 || true
+                    docker build -t img:v1 -f /var/lib/jenkins/workspace/Dockerfile /var/lib/jenkins/workspace
+                '''
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh '''
+                    docker rm -f cont || true
+                    docker run -itd --name cont -p 8080:8080 img:v1
+                '''
+            }
+        }
     }
 }

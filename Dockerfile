@@ -1,6 +1,6 @@
 FROM tomcat:9.0-jdk11-openjdk
 
-COPY  /root/d1 .
+COPY  . .
 
 EXPOSE 8080
 
